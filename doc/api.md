@@ -62,7 +62,7 @@
 | data.create_time | long | 订单创建时间戳 10 位 |
 | data.expire_time | long | 订单过期时间戳 10 位 |
 
-### 例子
+### 请求例子
 
 > 请求
 
@@ -76,7 +76,7 @@ curl -X POST -H 'Content-type: application/json' \
     'https://yinqiantong.com/order'
 ```
 
-### 返回例子
+> 返回例子
 
 ```
 {
