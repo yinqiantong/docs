@@ -1,6 +1,6 @@
 # 银钱通 签名
 
-生成的通用步骤如下：
+## 生成步骤
 
 > 第一步
 
@@ -20,7 +20,7 @@
 
 对`stringSignOrigin`进行MD5运算，再将得到的字符串所有字符转换为小写，得到`sign`值
 
-举例说明：
+## 举例说明
 
 假如传送的参数如下：
 
@@ -37,19 +37,19 @@ body:
 
 假设app_secret为： `your_app_secret`
 
-第一步，得到 `stringSignTemp`
+> 第一步，得到 `stringSignTemp`
 
 ```
 stringSignTemp = "channel=wx&client_ip=127.0.0.1&money=1&platform=app"
 ```
 
-第二步，得到 `stringSignOrigin`
+> 第二步，得到 `stringSignOrigin`
 
 ```
 stringSignOrigin = stringSignTemp + "&ts=1536053843&app_secret=your_app_secret"
 ```
 
-第三部，得到签名
+> 第三部，得到签名
 
 ```
 signTemp = md5(stringSignOrigin)
@@ -75,6 +75,6 @@ ts: 1536053843
 sign: 1917abc8b8908f9bef5cc86559c26edc
 ``` 
 
-# 签名测试
+## 签名测试
 
 [https://yinqiantong.com/html/experience/sign.html](https://yinqiantong.com/html/experience/sign.html)

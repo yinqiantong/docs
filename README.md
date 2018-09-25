@@ -9,8 +9,8 @@
 
 ### 签名
 
-[签名说明](https://github.com/yinqiantong/docs/blob/master/doc/sign.md)
-[签名测试](https://yinqiantong.com/html/experience/sign.html)
+* [签名说明](https://github.com/yinqiantong/docs/blob/master/doc/sign.md)
+* [签名测试](https://yinqiantong.com/html/experience/sign.html)
 
 # 客户端
 
