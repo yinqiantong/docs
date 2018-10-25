@@ -207,7 +207,7 @@ curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=0000000
 
 ### 通知body
 
-** Content-type: application/json **
+**Content-type: application/json**
 
 | 参数 | 类型 | 描述 |
 | :---: | :---: |  --- |
