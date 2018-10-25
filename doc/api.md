@@ -20,20 +20,22 @@
 
 | 参数 | 类型 | 是否必填 | 描述 |
 | :---: | :---: | :---: | --- |
-| appid | string | 必填 | **银钱通** App ID |
-| appkey | string | 必填 | **银钱通** App Key |
-| ts | int | 必填 | 当前时间戳，10位，此时间戳跟 **银钱通** 服务器的时间差不能超过 86400 |
-| sign | string | 必填 | 签名。[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
+| appid | string | 必填 | **银钱通** App ID（可到「**银钱通**管理后台」-「应用管理」-「应用列表」中查看） |
+| appkey | string | 必填 | **银钱通** App Key （可到「**银钱通**管理后台」-「应用管理」-「应用列表」中查看） |
+| ts | int | 必填 | 当前时间戳，10位，取值范围：`ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` |
+| sign | string | 必填 | 接口签名。[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
 
 ### body 参数
 
 | 参数 | 类型 | 是否必填 | 描述 |
 | :---: | :---: | :---: | --- |
-| channel | string | 必填 | 支付渠道（wx：微信；alipay：支付宝） |
-| platform | string | 必填 | 支付平台（app：手机支付；mp：公众号支付；mini_app：小程序支付；h5：H5支付；pc：PC网页支付） |
-| money | int | 必填 | 金额。以`分`为单位，1元=100分。money>0 |
-| client_ip | string | 必填 | 发起支付请求客户端的 IPv4 地址，如: 127.0.0.1 |
-| notify_url | string | 必填 | 回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址 |
+| client_out_trade_no | string | 必填 | 商户自定义订单号，要求32个字符内，只能是数字、大小写字母，且在同一app内唯一 |
+| channel | string | 必填 | 支付渠道，`wx`：微信；`alipay`：支付宝 |
+| platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付 |
+| money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
+| client_ip | string | 必填 | 发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址 |
+| return_url | string | 选填 | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
 | open_id | string | 某些条件下必填 | open id，微信公众号/微信小程序必填此参数 |
 | subject | string | | 商品标题 |
 | description | string | | 商品描述 |
@@ -50,6 +52,7 @@
 | data.channel | string | 支付渠道（wx：微信；alipay：支付宝） |
 | data.platform | string | 支付平台（app：手机支付；mp：公众号支付；mini_app：小程序支付；h5：H5支付；pc：PC网页支付） |
 | data.out_trade_no | string | 全局唯一的订单号 |
+| data.cient_out_trade_no | string | 商户的订单号 |
 | data.status | string | 订单状态，unpaid:未支付；paid:支付成功；expired:已失效；refunding:正在退款；refunded:已退款 |
 | data.money | int | 订单金额。以`分`为单位，1元=100分。money>0 |
 | data.client_ip | string | 发起支付请求客户端的 IPv4 地址，如: 127.0.0.1 |

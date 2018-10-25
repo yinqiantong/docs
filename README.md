@@ -1,5 +1,9 @@
 # 银钱通 接入文档
 
+# API文档
+
+详情，请参阅 [API 文档](https://github.com/yinqiantong/docs/blob/master/doc/api.md)
+
 # SDK
 
 ### 服务端SDK
@@ -10,10 +14,6 @@
 ### 客户端SDK
 
 * [Js SDK 接入指南](https://github.com/yinqiantong/js-sdk)
-
-# API文档
-
-详情，请参阅 [API 文档](https://github.com/yinqiantong/docs/blob/master/doc/api.md)
 
 # 联系我们
 
