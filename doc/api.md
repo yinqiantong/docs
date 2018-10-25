@@ -34,7 +34,7 @@
 | platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
 | client_ip | string | 必填 | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
-| notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址 |
+| notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址，请求内容请参照[支付回调接口](#支付回调) |
 | open_id | string | 某些条件下必填 | open id，微信公众号/微信小程序必填此参数 |
 | return_url | string | | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
 | subject | string | | 商品标题 |
@@ -112,7 +112,7 @@ curl -X POST -H 'Content-type: application/json' \
 
 [GET] `https://yinqiantong.com/order`
 
-### URL参数
+### url参数
 
 | 参数 | 类型 | 是否必填 | 描述 |
 | :---: | :---: | :---: | --- |
@@ -183,3 +183,5 @@ curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=0000000
 ```
 
 ## 支付回调接口
+
+
