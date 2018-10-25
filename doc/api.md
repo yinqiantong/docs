@@ -31,12 +31,12 @@
 | :---: | :---: | :---: | --- |
 | client_out_trade_no | string | 必填 | 商户自定义订单号，要求32个字符内，只能是数字、大小写字母，且在同一app内唯一 |
 | channel | string | 必填 | 支付渠道，`wx`：微信；`alipay`：支付宝 |
-| platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付 |
+| platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
-| client_ip | string | 必填 | 发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| client_ip | string | 必填 | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
 | notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址 |
-| return_url | string | 选填 | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
 | open_id | string | 某些条件下必填 | open id，微信公众号/微信小程序必填此参数 |
+| return_url | string | | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
 | subject | string | | 商品标题 |
 | description | string | | 商品描述 |
 | extra | string | | 额外参数，支付成功后，原样返回 |
@@ -48,19 +48,19 @@
 | code | int | 状态码 |
 | msg | string | 提示信息 |
 | data | json object |  |
-| data.app_id | string | **银钱通** 的 App ID |
-| data.channel | string | 支付渠道（wx：微信；alipay：支付宝） |
-| data.platform | string | 支付平台（app：手机支付；mp：公众号支付；mini_app：小程序支付；h5：H5支付；pc：PC网页支付） |
-| data.out_trade_no | string | 全局唯一的订单号 |
-| data.cient_out_trade_no | string | 商户的订单号 |
-| data.status | string | 订单状态，unpaid:未支付；paid:支付成功；expired:已失效；refunding:正在退款；refunded:已退款 |
-| data.money | int | 订单金额。以`分`为单位，1元=100分。money>0 |
-| data.client_ip | string | 发起支付请求客户端的 IPv4 地址，如: 127.0.0.1 |
+| data.app_id | string | **银钱通** App ID |
+| data.channel | string | 支付渠道 |
+| data.platform | string | 支付平台 |
+| data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
+| data.cient_out_trade_no | string | 商户自定义订单号 |
+| data.status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
+| data.money | int | 订单金额 |
+| data.client_ip | string | 客户端IP |
 | data.open_id | string | open id |
 | data.subject | string | 商品标题 |
 | data.description | string | 商品描述 |
 | data.extra | string | 额外参数 |
-| data.pay_body | string | 支付相关的请求内容，转成字符串 |
+| data.pay_body | string | 支付相关的请求内容 |
 | data.pay_time | long | 支付时间戳 10 位，创建订单的时候，默认 0 |
 | data.create_time | long | 订单创建时间戳 10 位 |
 | data.expire_time | long | 订单过期时间戳 10 位 |
@@ -75,7 +75,7 @@ curl -X POST -H 'Content-type: application/json' \
     -H 'appid: 00000000' \
     -H 'appkey: 1234567890123456' \
     -H 'sign: 74f9cca4418240b2340e36991d44e672' \
-    -d '{"channel":"alipay", "platform":"h5","money":1,"client_ip":"127.0.0.1","subject":""}' \
+    -d '{"client_out_trade_no":"1540449058","channel":"wx", "platform":"h5","money":1,"client_ip":"127.0.0.1","notify_url":"https://yinqiantong.com/test","subject":"商品标题","description":"商品描述","extra":"this is extra param"}' \
     'https://yinqiantong.com/order'
 ```
 
@@ -83,31 +83,103 @@ curl -X POST -H 'Content-type: application/json' \
 
 ```
 {
-    "msg": "ok", 
-    "code": 200, 
-    "data": {
-        "app_id": "00000000", 
-        "channel": 1, 
-        "platform": 3, 
-        "out_trade_no": "0000000013153621399830c1a3e", 
-        "status": 0, 
-        "money": 1, 
-        "client_ip": "127.0.0.1", 
-        "open_id": "", 
-        "subject": "", 
-        "description": "", 
-        "notify_url": "", 
-        "success_url": "", 
-        "extra": "", 
-        "pay_body": "<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=utf-8' method='post'><input type='hidden' name='app_id' value='2018081661080671'/><input type='hidden' name='method' value='alipay.trade.wap.pay'/><input type='hidden' name='format' value='JSON'/><input type='hidden' name='charset' value='utf-8'/><input type='hidden' name='sign_type' value='RSA2'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='return_url' value=''/><input type='hidden' name='notify_url' value='http://yinqiantong.com/alipay/notify'/><input type='hidden' name='timestamp' value='2018-09-06 14:06:38'/><input type='hidden' name='sign' value='tQ9pnnTWf/8lwbCJTBS0lCHYAbDvpLXeTme7Zg3FXyb7UXiS1q71pBSi8FCSH0KaDY+Jj/JngixkjLry9idvl8gYBa0fsgE4vrf2XBid55zE0sFDZDVEtE5YqnyRhEBPGZPE3Rlr1lRiPZDxHp5Tixq9Pybb9kcttgaqBqk9WPsZRqDq35YTeEq+no5OVUJ2fzdQoKteHridRubduFtDgAmlPujduUK8RqpwTOGRy/F2+MnW9DWBvwfTc4ePxwZyfjk+56lotgcsdYlk50Gx11xjRVdWQLd6mfk32R7+UG+B/AD2i/dhCNJZc0lQaUyVVmOFB2KpOW2tpKPEGi3//g=='/><input type='hidden' name='biz_content' value='{\"out_trade_no\":\"0000000013153621399830c1a3e\",\"total_amount\":1,\"subject\":\"\",\"notify_url\":\"http:\\/\\/yinqiantong.com\\/api\\/alipay\\/notify\",\"product_code\":\"QUICK_WAP_WAY\"}'/><input type='submit' value='ok' style='display:none;'></form><script>document.forms['alipaysubmit'].submit();</script>", 
-        "pay_time": 0, 
-        "expire_time": 1536221198, 
-        "create_time": 1536213998
-    }
+  "msg": "ok",
+  "code": 200,
+  "data": {
+    "app_id": "00000000",
+    "channel": "wx",
+    "platform": "h5",
+    "out_trade_no": "00000000231540451777acf9947",
+    "client_out_trade_no": "1540449058",
+    "status": "unpaid",
+    "money": 1,
+    "client_ip": "127.0.0.1",
+    "open_id": "",
+    "subject": "商品标题",
+    "description": "商品描述",
+    "notify_url": "https://yinqiantong.com/test",
+    "return_url": "",
+    "extra": "this is extra param",
+    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url=",
+    "pay_time": 0,
+    "expire_time": 1540458977,
+    "create_time": 1540451777
+  }
 }
 ```
 
 ## 查询订单接口
 
+[GET] `https://yinqiantong.com/order`
+
+### URL参数
+
+| 参数 | 类型 | 是否必填 | 描述 |
+| :---: | :---: | :---: | --- |
+| appid | string | 必填 | **银钱通** App ID |
+| out_trade_no | string | | **银钱通** 全局唯一的订单号 |
+| client_out_trade_no | string | | 商户自定义订单号 |
+
+### 返回参数
+
+| 参数 | 类型  | 描述 |
+| :--- | :---: | --- |
+| code | int | 状态码 |
+| msg | string | 提示信息 |
+| data | json object |  |
+| data.app_id | string | **银钱通** App ID |
+| data.channel | string | 支付渠道 |
+| data.platform | string | 支付平台 |
+| data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
+| data.cient_out_trade_no | string | 商户自定义订单号 |
+| data.status | string | 订单状态 |
+| data.money | int | 订单金额 |
+| data.client_ip | string | 客户端IP |
+| data.open_id | string | open id |
+| data.subject | string | 商品标题 |
+| data.description | string | 商品描述 |
+| data.extra | string | 额外参数 |
+| data.pay_body | string | 支付相关的请求内容 |
+| data.pay_time | long | 支付时间戳 10 位 |
+| data.create_time | long | 订单创建时间戳 10 位 |
+| data.expire_time | long | 订单过期时间戳 10 位 |
+
+### 请求例子
+
+> 请求
+
+```
+curl 'https://yinqiantong.com/order?out_trade_no=00000000231540451777acf9947&appid=00000000' | jq
+curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=00000000' | jq
+```
+
+> 返回例子
+
+```
+{
+  "msg": "ok",
+  "code": 200,
+  "data": {
+    "app_id": "00000000",
+    "channel": "wx",
+    "platform": "h5",
+    "out_trade_no": "00000000231540451777acf9947",
+    "client_out_trade_no": "1540449058",
+    "status": "unpaid",
+    "money": 1,
+    "client_ip": "127.0.0.1",
+    "open_id": "",
+    "subject": "商品标题",
+    "description": "商品描述",
+    "notify_url": "https://yinqiantong.com/test",
+    "return_url": "",
+    "extra": "this is extra param",
+    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url=",
+    "pay_time": 0,
+    "expire_time": 1540458977,
+    "create_time": 1540451777
+  }
+}
+```
 
 ## 支付回调接口
