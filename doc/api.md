@@ -3,16 +3,17 @@
 **目录**
 
 * [签名](#签名)
-* [创建订单接口](#创建订单接口)
-* [查询订单接口](#查询订单接口)
-* [支付回调通知](#支付回调通知)
+* [错误码](#错误码)
+* [一，创建订单接口](#一，创建订单接口)
+* [二，查询订单接口](#二，查询订单接口)
+* [三，支付回调通知](#三，支付回调通知)
 
 ## 签名
 
 * [签名说明](https://github.com/yinqiantong/docs/blob/master/doc/sign.md)
 * [签名测试](https://yinqiantong.com/html/experience/sign.html)
 
-## 创建订单接口
+## 一，创建订单接口
 
 [POST] `https://yinqiantong.com/order`
 
@@ -49,7 +50,7 @@
 
 | 参数 | 类型  | 描述 |
 | :--- | :---: | --- |
-| code | int | 状态码 |
+| code | int | 状态码，请参考 [错误码](#错误码) |
 | msg | string | 提示信息 |
 | data | json object |  |
 | data.app_id | string | **银钱通** App ID |
@@ -112,7 +113,12 @@ curl -X POST -H 'Content-type: application/json' \
 }
 ```
 
-## 查询订单接口
+### 相关问题
+
+1. [什么是 `POST` 请求](http://www.w3school.com.cn/tags/html_ref_httpmethods.asp)
+1. []()
+
+## 二，查询订单接口
 
 [GET] `https://yinqiantong.com/order`
 
@@ -132,7 +138,7 @@ curl -X POST -H 'Content-type: application/json' \
 
 | 参数 | 类型  | 描述 |
 | :--- | :---: | --- |
-| code | int | 状态码 |
+| code | int | 状态码，请参考 [错误码](#错误码) |
 | msg | string | 提示信息 |
 | data | json object |  |
 | data.app_id | string | **银钱通** App ID |
@@ -190,10 +196,14 @@ curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=0000000
 }
 ```
 
-## 支付回调通知
+### 相关问题
+
+1. [什么是 `GET` 请求](http://www.w3school.com.cn/tags/html_ref_httpmethods.asp)
+
+## 三，支付回调通知
 
 ```
-在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果回调给商户
+在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果回调给商户。商户需要有接受回调和处理回调结果的服务。
 ```
 
 ### 通知Header
@@ -242,3 +252,27 @@ curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=0000000
     "code": 200
 }
 ```
+
+## 错误码
+
+| 错误码 | 描述 |
+| :---: | :--- |
+| 200 | 正常 |
+| 4000 | 参数异常 |
+| 4001 | 签名不正确 |
+| 4002 | 签名已过期 |
+| 4003 | 缺少相关Header参数 |
+| 4004 | 应用不存在 |
+| 4005 | 招不到相关数据 |
+| 4006 | openid获取失败 |
+| 4007 | 尚未上线 |
+| 4008 | 订单已存在 |
+| 4009 | 用户不存在 |
+| 4010 | 订单不存在 |
+| 4011 | 密码不正确 |
+| 4012 | 支付失败 |
+| 4013 | 退款失败 |
+| 4014 | 操作失败 |
+| 4015 | 会话已过期 |
+| 4016 | 链接超时 |
+| 5000 | 服务异常 |
