@@ -116,7 +116,6 @@ curl -X POST -H 'Content-type: application/json' \
 ### 相关问题
 
 1. [什么是 `POST` 请求](http://www.w3school.com.cn/tags/html_ref_httpmethods.asp)
-1. []()
 
 ## 二，查询订单接口
 
