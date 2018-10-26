@@ -130,39 +130,32 @@ curl -X POST -H 'Content-type: application/json' \
 | 参数 | 类型 | 是否必填 | 描述 |
 | :---: | :---: | :---: | --- |
 | appid | string | 必填 | **银钱通** App ID |
-| out_trade_no | string | | **银钱通** 全局唯一的订单号 |
-| client_out_trade_no | string | | 商户自定义订单号 |
+| client_out_trade_no | string | 必填 | 商户自定义订单号 |
 
 ### 返回参数
 
 | 参数 | 类型  | 描述 |
 | :--- | :---: | --- |
-| code | int | 状态码，请参考 [错误码](#错误码) |
+| code | int | 状态码，参考状态码说明 |
 | msg | string | 提示信息 |
-| data | json object |  |
-| data.app_id | string | **银钱通** App ID |
-| data.channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
-| data.platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
-| data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
-| data.cient_out_trade_no | string | 商户自定义订单号 |
-| data.status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
-| data.money | int | 订单金额，以 `分` 为单位（1元=100分） |
-| data.client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
-| data.open_id | string | 微信 open id |
-| data.subject | string | 商品标题 |
-| data.description | string | 商品描述 |
-| data.extra | string | 额外参数 |
-| data.pay_body | string | 支付相关的请求内容 |
-| data.pay_time | long | 支付时间戳 10 位 |
-| data.create_time | long | 订单创建时间戳 10 位 |
-| data.expire_time | long | 订单过期时间戳 10 位 |
+
+### 状态码说明
+
+| code | 描述 |
+| :--- | :--- |
+| 200 | 支付成功 |
+| 4201 | 等待支付 |
+| 4400 | 支付失败 |
+| 4408 | 订单已失效 |
+| 4404 | 没有找到相关信息 |
+| 4414 | 参数异常 |
+| 4500 | 服务异常 |
 
 ### 请求例子
 
 > 请求
 
 ```
-curl 'https://yqtapi.com/order?out_trade_no=00000000231540451777acf9947&appid=00000000' | jq
 curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | jq
 ```
 
@@ -170,28 +163,8 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 
 ```
 {
-  "msg": "ok",
-  "code": 200,
-  "data": {
-    "app_id": "00000000",
-    "channel": "wx",
-    "platform": "h5",
-    "out_trade_no": "00000000231540451777acf9947",
-    "client_out_trade_no": "1540449058",
-    "status": "unpaid",
-    "money": 1,
-    "client_ip": "127.0.0.1",
-    "open_id": "",
-    "subject": "商品标题",
-    "description": "商品描述",
-    "notify_url": "https://yinqiantong.com/test",
-    "return_url": "",
-    "extra": "this is extra param",
-    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url=",
-    "pay_time": 0,
-    "expire_time": 1540458977,
-    "create_time": 1540451777
-  }
+  "msg": "支付成功",
+  "code": 200
 }
 ```
 
