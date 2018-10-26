@@ -37,9 +37,9 @@
 | channel | string | 必填 | 支付渠道，`wx`：微信；`alipay`：支付宝 |
 | platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
-| client_ip | string | 必填 | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| client_ip | string | 必填 | 客户端IP，发客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
 | notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址，请求内容请参照[支付回调通知](#支付回调通知) |
-| open_id | string | 某些条件下必填 | open id，微信公众号/微信小程序必填此参数 |
+| open_id | string | 某些条件下必填 | 微信 open id，微信公众号/微信小程序必填此参数 |
 | return_url | string | | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
 | subject | string | | 商品标题 |
 | description | string | | 商品描述 |
@@ -53,14 +53,14 @@
 | msg | string | 提示信息 |
 | data | json object |  |
 | data.app_id | string | **银钱通** App ID |
-| data.channel | string | 支付渠道 |
-| data.platform | string | 支付平台 |
+| data.channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
+| data.platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
 | data.cient_out_trade_no | string | 商户自定义订单号 |
 | data.status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
-| data.money | int | 订单金额 |
-| data.client_ip | string | 客户端IP |
-| data.open_id | string | open id |
+| data.money | int | 订单金额，以 `分` 为单位（1元=100分） |
+| data.client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| data.open_id | string | 微信 open id |
 | data.subject | string | 商品标题 |
 | data.description | string | 商品描述 |
 | data.extra | string | 额外参数 |
@@ -136,14 +136,14 @@ curl -X POST -H 'Content-type: application/json' \
 | msg | string | 提示信息 |
 | data | json object |  |
 | data.app_id | string | **银钱通** App ID |
-| data.channel | string | 支付渠道 |
-| data.platform | string | 支付平台 |
+| data.channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
+| data.platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
 | data.cient_out_trade_no | string | 商户自定义订单号 |
-| data.status | string | 订单状态 |
-| data.money | int | 订单金额 |
-| data.client_ip | string | 客户端IP |
-| data.open_id | string | open id |
+| data.status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
+| data.money | int | 订单金额，以 `分` 为单位（1元=100分） |
+| data.client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| data.open_id | string | 微信 open id |
 | data.subject | string | 商品标题 |
 | data.description | string | 商品描述 |
 | data.extra | string | 额外参数 |
@@ -212,14 +212,14 @@ curl 'https://yinqiantong.com/order?client_out_trade_no=1540449058&appid=0000000
 | 参数 | 类型 | 描述 |
 | :---: | :---: |  --- |
 | app_id | string | **银钱通** App ID |
-| channel | string | 支付渠道 |
-| platform | string | 支付平台 |
+| channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
+| platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | out_trade_no | string | **银钱通** 全局唯一的订单号 |
 | cient_out_trade_no | string | 商户自定义订单号 |
-| status | string | 订单状态 |
-| money | int | 订单金额 |
-| client_ip | string | 客户端IP |
-| open_id | string | open id |
+| status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
+| money | int | 订单金额，以 `分` 为单位（1元=100分） |
+| client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
+| open_id | string | 微信 open id |
 | subject | string | 商品标题 |
 | description | string | 商品描述 |
 | extra | string | 额外参数 |
