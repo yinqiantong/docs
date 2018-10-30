@@ -149,17 +149,9 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 ## 三，支付回调通知
 
 ```
-在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果，通过 `POST` 的方式，回调给商户。商户需要有接受回调和处理回调结果的服务。
+在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果，通过 `POST` 的方式，回调给商户。
+商户需要有接受回调和处理回调结果的服务。
 ```
-
-### 通知Header
-
-| 参数 | 类型 | 描述 |
-| :---: | :---: |  --- |
-| appid | string | **银钱通** App ID ，请校验本地的appid是否一致 |
-| appkey | string | **银钱通** App Key 请校验本地的appkey是否一致 |
-| ts | int | 当前时间戳，10位，请校验 `ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` 条件是否成立 |
-| sign | string | 接口签名，请校验签名，[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
 
 ### 通知body
 
@@ -167,7 +159,9 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 
 | 参数 | 类型 | 描述 |
 | :---: | :---: |  --- |
-| app_id | string | **银钱通** App ID |
+| appid | string | **银钱通** App ID ，请校验本地的appid是否一致 |
+| ts | int | 当前时间戳，10位，请校验 `ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` 条件是否成立 |
+| sign | string | 接口签名，请校验签名，[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
 | channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
 | platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
 | out_trade_no | string | **银钱通** 全局唯一的订单号 |
@@ -181,23 +175,9 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 | extra | string | 额外参数 |
 | pay_time | long | 支付时间戳 10 位 |
 
-### 返回参数
+### 处理结果
 
-```
-收到支付结果通知后，请严格按照示例返回参数给银钱通
-```
-
-| 参数 | 类型 | 描述 |
-| :---: | :---: |  --- |
-| code | int | 200 代表成功，若出现请求异常，或者code不等于 200 的情况，银钱通会不定时地回调 |
-
-返回例子
-
-```
-{
-    "code": 200
-}
-```
+处理成功，返回 HTTP 状态 `200`。平台会认为非 `200` 的状态视为回调失败，回调会定时重试。
 
 ## 错误码
 
