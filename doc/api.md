@@ -21,54 +21,44 @@
 用于创建支付订单
 ```
 
-### header 参数
-
-| 参数 | 类型 | 是否必填 | 描述 |
-| :---: | :---: | :---: | --- |
-| appid | string | 必填 | **银钱通** App ID（可到「**银钱通**管理后台」-「应用管理」-「应用列表」中查看） |
-| appkey | string | 必填 | **银钱通** App Key （可到「**银钱通**管理后台」-「应用管理」-「应用列表」中查看） |
-| ts | int | 必填 | 当前时间戳，10位，取值范围：`ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` |
-| sign | string | 必填 | 接口签名。[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
-
 ### body 参数
 
 | 参数 | 类型 | 是否必填 | 描述 |
 | :---: | :---: | :---: | --- |
+| appid | string | 必填 | **银钱通** App ID（可到「**银钱通**管理后台」-「应用管理」-「应用列表」中查看） |
+| ts | int | 必填 | 当前时间戳，10位，取值范围：`ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` |
+| sign | string | 必填 | 接口签名。[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
 | client_out_trade_no | string | 必填 | 商户自定义订单号，要求32个字符内，只能是数字、大小写字母，且在同一app内唯一 |
-| channel | string | 必填 | 支付渠道，`wx`：微信；`alipay`：支付宝 |
-| platform | string | 必填 | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
+| channel | string | 必填 | 支付渠道，`1`：微信；`2`：支付宝；`3`：QQ；`4`：京东 |
+| platform | string | 必填 | 支付平台，`1`：PC网页支付，`2`：手机支付；`3`：H5支付；`4`：公众号支付；`5`：小程序支付；`6`：扫码支付 |
 | money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
-| client_ip | string | 必填 | 客户端IP，发客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
-| notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，用户支付成功后，我们服务器会主动发送一个post消息到这个网址，请求内容请参照[支付回调通知](#支付回调通知) |
+| client_ip | string | 必填 | （用户）发起支付请求客户端的 IPv4 地址，如: `114.114.114.114`，注意：这里不是服务器的 IP |
+| notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，要求128个字符内，用户支付成功后，我们服务器会主动发送一个post消息到这个网址，请求内容请参照[支付回调通知](#支付回调通知) |
 | open_id | string | 某些条件下必填 | 微信 open id，微信公众号/微信小程序必填此参数 |
-| return_url | string | | 返回页面地址，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
-| subject | string | | 商品标题 |
-| description | string | | 商品描述 |
-| extra | string | | 额外参数，支付成功后，原样返回 |
+| return_url | string | | 返回页面地址，要求128字符内，不能带参数，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
+| subject | string | | 商品标题，要求32个字符内 |
+| description | string | | 商品描述，要求128个字符内 |
+| extra | string | | 额外参数，支付成功后，原样返回，要求512个字符内 |
 
 ### 返回参数
 
 | 参数 | 类型  | 描述 |
 | :--- | :---: | --- |
-| code | int | 状态码，请参考 [错误码](#错误码) |
+| code | int | 状态码，请参考状态码说明 |
 | msg | string | 提示信息 |
 | data | json object |  |
-| data.app_id | string | **银钱通** App ID |
-| data.channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
-| data.platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
-| data.out_trade_no | string | **银钱通** 全局唯一的订单号 |
-| data.cient_out_trade_no | string | 商户自定义订单号 |
-| data.status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
-| data.money | int | 订单金额，以 `分` 为单位（1元=100分） |
-| data.client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
-| data.open_id | string | 微信 open id |
-| data.subject | string | 商品标题 |
-| data.description | string | 商品描述 |
-| data.extra | string | 额外参数 |
-| data.pay_body | string | 支付相关的请求内容 |
-| data.pay_time | long | 支付时间戳 10 位，创建订单的时候，默认 0 |
-| data.create_time | long | 订单创建时间戳 10 位 |
-| data.expire_time | long | 订单过期时间戳 10 位 |
+| data.pay_body | string | 支付相关的凭证 |
+| data.out_trade_no | string | **银钱通** 唯一订单号 |
+
+### 状态码说明
+
+| code | 描述 |
+| :--- | :--- |
+| 200 | 创建成功 |
+| 4414 | 参数异常 |
+| 4409 | 订单已存在 |
+| 4403 | 签名不正确 |
+| 4404 | 没有找到相关信息 |
 
 ### 请求例子
 
@@ -88,27 +78,11 @@ curl -X POST -H 'Content-type: application/json' \
 
 ```
 {
-  "msg": "ok",
+  "msg": "创建成功",
   "code": 200,
   "data": {
-    "app_id": "00000000",
-    "channel": "wx",
-    "platform": "h5",
-    "out_trade_no": "00000000231540451777acf9947",
-    "client_out_trade_no": "1540449058",
-    "status": "unpaid",
-    "money": 1,
-    "client_ip": "127.0.0.1",
-    "open_id": "",
-    "subject": "商品标题",
-    "description": "商品描述",
-    "notify_url": "https://yinqiantong.com/test",
-    "return_url": "",
-    "extra": "this is extra param",
-    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url=",
-    "pay_time": 0,
-    "expire_time": 1540458977,
-    "create_time": 1540451777
+    "out_trade_no": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url="
   }
 }
 ```
@@ -175,7 +149,7 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 ## 三，支付回调通知
 
 ```
-在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果回调给商户。商户需要有接受回调和处理回调结果的服务。
+在用户支付成功后，我们根据您在创建订单时候的 notify_url 参数，会把支付结果，通过 `POST` 的方式，回调给商户。商户需要有接受回调和处理回调结果的服务。
 ```
 
 ### 通知Header
@@ -229,22 +203,12 @@ curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | 
 
 | 错误码 | 描述 |
 | :---: | :--- |
-| 200 | 正常 |
-| 4000 | 参数异常 |
-| 4001 | 签名不正确 |
-| 4002 | 签名已过期 |
-| 4003 | 缺少相关Header参数 |
-| 4004 | 应用不存在 |
-| 4005 | 招不到相关数据 |
-| 4006 | openid获取失败 |
-| 4007 | 尚未上线 |
-| 4008 | 订单已存在 |
-| 4009 | 用户不存在 |
-| 4010 | 订单不存在 |
-| 4011 | 密码不正确 |
-| 4012 | 支付失败 |
-| 4013 | 退款失败 |
-| 4014 | 操作失败 |
-| 4015 | 会话已过期 |
-| 4016 | 链接超时 |
-| 5000 | 服务异常 |
+| 200 | 支付成功 |
+| 4201 | 等待支付 |
+| 4400 | 支付失败 |
+| 4403 | 签名不正确 |
+| 4404 | 没有找到相关信息 |
+| 4408 | 订单已失效 |
+| 4409 | 订单已存在 |
+| 4414 | 参数异常 |
+| 4500 | 服务异常 |
