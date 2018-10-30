@@ -93,7 +93,7 @@ curl -X POST -H 'Content-type: application/json' \
 
 ## 二，查询订单接口
 
-[GET] `https://yqtapi.com/order`
+[GET] `https://yqtapi.com/order?appid=00000000&client_out_trade_no=xxxxxxxxxxxxxxxxxxxx`
 
 ```
 用于查询订单的详情信息
