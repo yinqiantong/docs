@@ -36,8 +36,8 @@
 | notify_url | string | 必填 | 异步接收微信支付结果通知的回调地址，要求128个字符内，用户支付成功后，我们服务器会主动发送一个post消息到这个网址，请求内容请参照[支付回调通知](#支付回调通知) |
 | open_id | string | 某些条件下必填 | 微信 open id，微信公众号/微信小程序必填此参数 |
 | return_url | string | | 返回页面地址，要求128字符内，不能带参数，支付宝PC支付和微信H5支付支持，当用户支付完成后，返回的页面，返回的时候会自动带上url参数 `out_trade_no` |
-| subject | string | | 商品标题，要求32个字符内 |
-| description | string | | 商品描述，要求128个字符内 |
+| subject | string | | 商品标题，要求32个字符内，如：银钱通会员 |
+| description | string | | 商品描述，要求128个字符内，如：银钱通充值中心-会员充值 |
 | extra | string | | 额外参数，支付成功后，原样返回，要求512个字符内 |
 
 ### 返回参数
@@ -49,6 +49,7 @@
 | data | json object |  |
 | data.pay_body | string | 支付相关的凭证 |
 | data.out_trade_no | string | **银钱通** 唯一订单号 |
+| data.expire_time | long | 订单失效时间戳 10 位 |
 
 ### 状态码说明
 
@@ -82,7 +83,8 @@ curl -X POST -H 'Content-type: application/json' \
   "code": 200,
   "data": {
     "out_trade_no": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url="
+    "pay_body": "https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx25151618125264917b9fc0de4142376373&package=1479459154&redirect_url=",
+    "expire_time": 1234567890
   }
 }
 ```
