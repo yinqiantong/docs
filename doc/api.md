@@ -15,7 +15,7 @@
 
 ## 一，创建订单接口
 
-[POST] `https://yqtapi.com/order`
+[POST] `https://api.yqtapi.com/order`
 
 ```
 用于创建支付订单
@@ -72,7 +72,7 @@ curl -X POST -H 'Content-type: application/json' \
     -H 'appkey: 1234567890123456' \
     -H 'sign: 74f9cca4418240b2340e36991d44e672' \
     -d '{"client_out_trade_no":"1540449058","channel":"wx", "platform":"h5","money":1,"client_ip":"127.0.0.1","notify_url":"https://yinqiantong.com/test","subject":"商品标题","description":"商品描述","extra":"this is extra param"}' \
-    'https://yqtapi.com/order'
+    'https://api.yqtapi.com/order'
 ```
 
 > 返回例子
@@ -95,7 +95,7 @@ curl -X POST -H 'Content-type: application/json' \
 
 ## 二，查询订单接口
 
-[GET] `https://yqtapi.com/order?appid=00000000&client_out_trade_no=xxxxxxxxxxxxxxxxxxxx`
+[GET] `https://api.yqtapi.com/order?appid=00000000&client_out_trade_no=xxxxxxxxxxxxxxxxxxxx`
 
 ```
 用于查询订单的详情信息
@@ -132,7 +132,7 @@ curl -X POST -H 'Content-type: application/json' \
 > 请求
 
 ```
-curl 'https://yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | jq
+curl 'https://api.yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000' | jq
 ```
 
 > 返回例子
