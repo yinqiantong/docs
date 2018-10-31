@@ -164,11 +164,11 @@ curl 'https://api.yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000
 | appid | string | **银钱通** App ID ，请校验本地的appid是否一致 |
 | ts | int | 当前时间戳，10位，请校验 `ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` 条件是否成立 |
 | sign | string | 接口签名，请校验签名，[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
-| channel | string | 支付渠道，`wx`：微信；`alipay`：支付宝 |
-| platform | string | 支付平台，`app`：手机支付；`mp`：公众号支付；`mini_app`：小程序支付；`h5`：H5支付；`pc`：PC网页支付，`scan`：扫码支付 |
+| channel | string | 支付渠道，`1`：微信；`2`：支付宝；`3`：QQ；`4`：京东 |
+| platform | string | 支付平台，`1`：PC网页支付，`2`：手机支付；`3`：H5支付；`4`：公众号支付；`5`：小程序支付；`6`：扫码支付 |
 | out_trade_no | string | **银钱通** 全局唯一的订单号 |
 | cient_out_trade_no | string | 商户自定义订单号 |
-| status | string | 订单状态，`unpaid`：未支付；`paid`：支付成功；`expired`：已失效；`refunding`：正在退款；`refunded`：已退款 |
+| status | string | 订单状态，`0`：未支付；`1`：支付成功；`2`：支付失败；`3`：订单已过时 |
 | money | int | 订单金额，以 `分` 为单位（1元=100分） |
 | client_ip | string | 客户端IP，发起支付请求客户端的 IPv4 地址，如: `114.114.114.114` |
 | open_id | string | 微信 open id |
