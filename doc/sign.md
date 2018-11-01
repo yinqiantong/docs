@@ -34,9 +34,9 @@ client_ip: 127.0.0.1
 subject: my_subject
 ```
 
-> 假设当前时间戳为： `1541051068`
-> 假设appid为： `00000000`
-> 假设app_secret为： `your_app_secret`
+> 假设当前时间戳为： `1541051068`  
+> 假设appid为： `00000000`  
+> 假设app_secret为： `your_app_secret`  
 
 ### 第一步，得到 `stringSignTemp`
 
