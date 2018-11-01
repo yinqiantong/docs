@@ -62,7 +62,7 @@ sign = signTemp.toLowerCase()
 即：
 
 ```
-md5("channel=wx&client_ip=127.0.0.1&money=1&platform=app&ts=1536053843&app_secret=your_app_secret").toLowerCase()
+md5("appid=00000000&channel=1&client_ip=127.0.0.1&money=1&platform=2&subject=my_subject&ts=1541051068&app_secret=your_app_secret").toLowerCase()
 ```
 
 得出的签名如下
