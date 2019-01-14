@@ -29,7 +29,7 @@
 | ts | int | 必填 | 当前时间戳，10位，取值范围：`ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` |
 | sign | string | 必填 | 接口签名。[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
 | client_out_trade_no | string | 必填 | 商户自定义订单号，要求32个字符内，只能是数字、大小写字母，且在同一app内唯一 |
-| channel | string | 必填 | 支付渠道，`1`：微信；`2`：支付宝；`3`：QQ；`4`：京东 |
+| channel | string | 必填 | 支付渠道，`1`：支付宝；`2`：微信；`3`：QQ；`4`：京东 |
 | platform | string | 必填 | 支付平台，`1`：PC网页支付，`2`：手机支付；`3`：H5支付；`4`：公众号支付；`5`：小程序支付；`6`：扫码支付 |
 | money | int | 必填 | 支付金额，以 `分` 为单位（1元=100分）。取值范围：`money>0` |
 | client_ip | string | 必填 | （用户）发起支付请求客户端的 IPv4 地址，如: `114.114.114.114`，注意：这里不是服务器的 IP |
@@ -164,7 +164,7 @@ curl 'https://api.yqtapi.com/order?client_out_trade_no=1540449058&appid=00000000
 | appid | string | **银钱通** App ID ，请校验本地的appid是否一致 |
 | ts | int | 当前时间戳，10位，请校验 `ts > 当前时间戳-86400秒` && `ts < 当前时间戳+86400秒` 条件是否成立 |
 | sign | string | 接口签名，请校验签名，[签名方法](https://github.com/yinqiantong/docs/blob/master/doc/sign.md) |
-| channel | string | 支付渠道，`1`：微信；`2`：支付宝；`3`：QQ；`4`：京东 |
+| channel | string | 支付渠道，`1`：支付宝；`2`：微信；`3`：QQ；`4`：京东 |
 | platform | string | 支付平台，`1`：PC网页支付，`2`：手机支付；`3`：H5支付；`4`：公众号支付；`5`：小程序支付；`6`：扫码支付 |
 | out_trade_no | string | **银钱通** 全局唯一的订单号 |
 | cient_out_trade_no | string | 商户自定义订单号 |
